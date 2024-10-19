@@ -58,3 +58,7 @@ cython_debug/
 *.iml
 *.iws
 out/
+src/notebooks/env_variables.yml
+
+# macOS
+.DS_Store
