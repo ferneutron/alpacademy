@@ -1,12 +1,18 @@
-from injector import inject
+from src.utilities.companion_utilities import inference_pipeline
 
 
 class TeacherAssistantService:
 
-    @inject
     def __init__(self):
-        pass
-    def predict(self, raw_utterance):
 
-        return "test prediction"
+        self.language = None
+        self.week = None
+        self.material_state = None
+        self.week = None
+        self.utterance = None
 
+    def predict(self):
+
+        prediction = inference_pipeline(self.utterance)
+
+        return prediction

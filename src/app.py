@@ -1,11 +1,9 @@
-import logging
-import sys
 import uvicorn
 from fastapi import FastAPI
 from injector import Injector, SingletonScope
 from fastapi_injector import attach_injector
-from routers.v1 import Router as RouterV1
-from services import TeacherAssistantService
+from src.routers.v1.router import Router as RouterV1
+from src.services.teacher_assistant import TeacherAssistantService
 
 
 injector = Injector()

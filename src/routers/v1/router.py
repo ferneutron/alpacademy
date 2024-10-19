@@ -5,13 +5,12 @@ from src.services import TeacherAssistantService
 
 Router = APIRouter(prefix="/v1")
 
-
 @Router.post("/predict")
 async def orchestrator(
         request: RequestModel,
-        teacher_assistant_service: Injected(TeacherAssistantService)
+        teacher_assistant_service: TeacherAssistantService = Injected(TeacherAssistantService)
 ):
 
-    prediction = teacher_assistant_service.predict(text=request.text)
+    prediction = teacher_assistant_service.predict(raw_utterance=request.text)
 
     return prediction

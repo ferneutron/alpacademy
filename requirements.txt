@@ -3,3 +3,4 @@ PyYAML
 notebook
 pydantic
 fastapi
+injector
