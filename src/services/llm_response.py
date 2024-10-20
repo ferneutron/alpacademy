@@ -11,7 +11,7 @@ def llm_inference_pipeline(
     question_id: str,
     query: str,
     model,
-    config_path: str = r"src\configs\openai_config.json",
+    config_path: str = "src/configs/openai_config.json",
 ):
     try:
         if llm_provider == "openai":
@@ -30,7 +30,7 @@ def llm_inference_pipeline(
         config = ModelConfig(config_path)
         model = model(config=config, client=client, user_id=user_id)
         context = get_rag_context(query)
-        questions = config.load_config(r"src\data\question_answer_pairs.json")
+        questions = config.load_config("src/data/question_answer_pairs.json")
         question = questions[question_id]["question"]
         answer = questions[question_id]["answer"]
         return model.answer(
