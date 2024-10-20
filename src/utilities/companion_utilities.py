@@ -1,7 +1,10 @@
-from src.services.llm_states import proactive_llm_state
+from src.utilities.llama_interaction import get_llama_generated_question_from_material
+from src.utilities.llama_interaction import generate_llama_qa_response
+from src.services.llm_response import llm_inference_pipeline
+from src.utilities.llm_call.openai_llm import Agent
 
 
-def inference_pipeline(
+def inference_pipeline_non_parametric(
         material_state,
         material,
         question,
@@ -10,28 +13,28 @@ def inference_pipeline(
         config,
         llm_client):
 
-    if material_state != None and type(material_state) == str:
+    if material_state == "proactive":
+        print("entra")
+        llama_generated_question = get_llama_generated_question_from_material(llm_client, config)
+        response = llm_inference_pipeline(
+            llm_provider="groq",
+            question_id="Pregunta 4",
+            query="a la caza",
+            model=Agent
+        )
+        return response
 
-        if material_state == "question":
+    elif material_state == "Follow_up":
+        pass
 
-            print("en estado de pregunta")
+    elif material_state == "QA":
+        print("utterance")
+        print(utterance)
+        response = generate_llama_qa_response(llm_client, config, utterance)
 
-        if material_state == "follow_up":
-
-            print("en estado de follow_up")
-
-
-    else:
-
-        if utterance != None:
-
-            answer = proactive_llm_state(utterance, material, config, llm_client)
-
-
-            print("en estado proactivo")
-
-
-
+        return response
 
 
-    return "tu utterance es:" + utterance
+def inference_pipeline():
+
+    pass

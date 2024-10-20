@@ -1,6 +1,6 @@
 GROQ_API_KEY: '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'
 RAG_URL: 'https://us-central1-ferneutron-demos.cloudfunctions.net/alpacademy-retriever'
-MATERIALS_ROUTE: 'data/estados_materiales.json'
+MATERIALS_ROUTE: 'src/data/estados_materiales.json'
 LLM_GET_QUESTION_PROMPT: |
   Eres un profesor de nivel básico, y estas enseñándole a un alumno, tu tarea es que: basado en el contexto que se te proporciona a continuación. 
   Deberás generar UNA y SÓLO UNA PREGUNTA que busque evaluar el nivel de conocimiento del alumno sobre el contexto que se te proporciona.

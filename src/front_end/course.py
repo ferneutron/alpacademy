@@ -16,7 +16,6 @@ def mostrar_semana(semana_index):
     clases = [item for item, tipo in zip(contenido, curso_data[semana]['tipo']) if tipo == 'clase']
     return "\n\n".join(clases), f"## {semana}", obtener_texto_boton(semana_index)
 
-
 def saluda():
     return say_hello()
 
@@ -79,6 +78,7 @@ if __name__ == '__main__':
                     label="Texto Generado",
                     interactive=False  # Hace que el Textbox no sea editable
             )
+
             enviar_btn = gr.Button("Enviar pregunta")
 
         # Inicializar con la primera semana
