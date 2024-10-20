@@ -1,7 +1,7 @@
 import gradio as gr 
 import json
 import random
-
+from communicate_with_gradio import say_hello
 # Cargar el JSON
 with open('contenido.json', 'r', encoding='utf-8') as file:
     curso_data = json.load(file)
@@ -9,20 +9,27 @@ with open('contenido.json', 'r', encoding='utf-8') as file:
 semanas = list(curso_data.keys())
 semana_actual = 0
 
+
 def mostrar_semana(semana_index):
     semana = semanas[semana_index]
     contenido = curso_data[semana]['material']
     clases = [item for item, tipo in zip(contenido, curso_data[semana]['tipo']) if tipo == 'clase']
     return "\n\n".join(clases), f"## {semana}", obtener_texto_boton(semana_index)
 
+
+def saluda():
+    return say_hello()
+
 def obtener_texto_boton(semana_index):
     siguiente_index = (semana_index + 1) % len(semanas)
     return f"Avanza a la {semanas[siguiente_index]}"
+
 
 def siguiente_semana():
     global semana_actual
     semana_actual = (semana_actual + 1) % len(semanas)
     return mostrar_semana(semana_actual)
+
 
 def responder_pregunta(mensaje, historial):
     respuestas = [
@@ -35,6 +42,7 @@ def responder_pregunta(mensaje, historial):
     respuesta = random.choice(respuestas)
     historial.append((mensaje, respuesta))
     return "", historial
+
 
 css = """
 h1 {
@@ -66,6 +74,7 @@ if __name__ == '__main__':
             # Chatbot
             chatbot = gr.Chatbot(label="Conversación con el Agente")
             mensaje = gr.Textbox(label="Tu pregunta", placeholder="Escribe tu pregunta aquí...", autofocus=True)
+            tx_box = gr.Textbox(saluda())
             enviar_btn = gr.Button("Enviar pregunta")
 
         # Inicializar con la primera semana
