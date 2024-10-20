@@ -1,21 +1,40 @@
 import gradio as gr 
+import json
+import random
 
-clase = f"""
-## Mesopotamia: La tierra entre ríos
+# Cargar el JSON
+with open('contenido.json', 'r', encoding='utf-8') as file:
+    curso_data = json.load(file)
 
-### ¿Qué es Mesopotamia?
+semanas = list(curso_data.keys())
+semana_actual = 0
 
-Mesopotamia, la "tierra entre ríos" en griego, fue una de las primeras civilizaciones en surgir en el planeta. Ubicada entre los ríos Tigris y Éufrates, en lo que hoy es Irak, Irán, Siria y Turquía, esta región se convirtió en el crisol de muchas innovaciones que marcarían el rumbo de la humanidad. Los sumerios, acadios, babilonios y asirios fueron algunas de las civilizaciones que florecieron en Mesopotamia, dejando un legado invaluable en diversos campos.
+def mostrar_semana(semana_index):
+    semana = semanas[semana_index]
+    contenido = curso_data[semana]['material']
+    clases = [item for item, tipo in zip(contenido, curso_data[semana]['tipo']) if tipo == 'clase']
+    return "\n\n".join(clases), f"## {semana}", obtener_texto_boton(semana_index)
 
-### Importancia histórica
+def obtener_texto_boton(semana_index):
+    siguiente_index = (semana_index + 1) % len(semanas)
+    return f"Avanza a la {semanas[siguiente_index]}"
 
-Gracias a las fértiles tierras de los valles fluviales, los habitantes de Mesopotamia desarrollaron una agricultura próspera y establecieron complejas sociedades urbanas. Construyeron grandes ciudades amuralladas, zigurats (templos escalonados) y sistemas de riego ingeniosos. Además, fueron pioneros en el desarrollo de la escritura cuneiforme, la cual les permitió registrar sus conocimientos, leyes y relatos históricos. Esta invención revolucionaria sentó las bases para el surgimiento de la escritura en otras partes del mundo.
+def siguiente_semana():
+    global semana_actual
+    semana_actual = (semana_actual + 1) % len(semanas)
+    return mostrar_semana(semana_actual)
 
-### La vida en Mesopotamia
-
-El legado de Mesopotamia es vasto y perdurable. Sus avances en matemáticas, astronomía, medicina y leyes influyeron en civilizaciones posteriores como la egipcia y la griega. El Código de Hammurabi, una de las primeras recopilaciones de leyes escritas, es un ejemplo de la sofisticación jurídica alcanzada por los babilonios. Asimismo, los mitos y leyendas mesopotámicas, como el de Gilgamesh, han cautivado a la humanidad durante milenios y continúan siendo objeto de estudio y fascinación.
-
-"""
+def responder_pregunta(mensaje, historial):
+    respuestas = [
+        "Interesante pregunta. ¿Podrías elaborar un poco más?",
+        "Esa es una buena observación. ¿Qué te hace pensar eso?",
+        "Entiendo tu punto. ¿Has considerado también...?",
+        "Gracias por tu pregunta. Déjame pensar en eso por un momento.",
+        "Esa es una perspectiva interesante. ¿Cómo llegaste a esa conclusión?",
+    ]
+    respuesta = random.choice(respuestas)
+    historial.append((mensaje, respuesta))
+    return "", historial
 
 css = """
 h1 {
@@ -28,24 +47,34 @@ if __name__ == '__main__':
     demo = gr.Blocks(theme=gr.themes.Soft(), css=css)
     
     with demo:
-        gr.Markdown(f""" """)
         gr.Markdown(f"""# Alpacademy """)
-        gr.Markdown(f"""## Semana 1""")
+        semana_header = gr.Markdown()
         gr.Markdown(f""" """)
 
         with gr.Column():
             gr.Markdown(f"""-------------------------------------------- """)
-            gr.Markdown(clase)
+            contenido_semana = gr.Markdown()
             gr.Markdown(f"""-------------------------------------------- """)
             with gr.Row():
                 with gr.Column():
                     gr.Markdown()
                 with gr.Column():
-                    hola_1 = gr.Button(value="⏩ Siguiente ⏩", interactive=True)
+                    siguiente_btn = gr.Button(interactive=True)
                 with gr.Column():
                     gr.Markdown()
 
-            agent = gr.Textbox(lines=7, label="Agente")
-            student = gr.Textbox(lines=1, label="Pregúntame", autofocus=True)
+            # Chatbot
+            chatbot = gr.Chatbot(label="Conversación con el Agente")
+            mensaje = gr.Textbox(label="Tu pregunta", placeholder="Escribe tu pregunta aquí...", autofocus=True)
+            enviar_btn = gr.Button("Enviar pregunta")
 
-    demo.launch(debug=True, server_name="0.0.0.0", server_port=8080)
+        # Inicializar con la primera semana
+        contenido_inicial, header_inicial, texto_boton_inicial = mostrar_semana(0)
+        contenido_semana.value = contenido_inicial
+        semana_header.value = header_inicial
+        siguiente_btn.value = texto_boton_inicial
+
+        siguiente_btn.click(siguiente_semana, outputs=[contenido_semana, semana_header, siguiente_btn])
+        enviar_btn.click(responder_pregunta, inputs=[mensaje, chatbot], outputs=[mensaje, chatbot])
+
+    demo.launch(debug=True, server_name="127.0.0.1", server_port=8080)
