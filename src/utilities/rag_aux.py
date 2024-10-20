@@ -11,6 +11,7 @@ def rag_query(context, config):
 
         response_content = rag_api_response.json()
 
-        print(response_content)
+        return response_content
     else:
         rag_api_response.raise_for_status()
+        return None

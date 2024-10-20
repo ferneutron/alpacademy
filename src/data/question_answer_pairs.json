@@ -1,0 +1,14 @@
+{
+    "Pregunta 1": {
+        "question": "¿Cuál es el período de tiempo que comprende la prehistoria?",
+        "answer": "La prehistoria es el período de tiempo que comprende desde la aparición del primer ser humano hasta la invención de la escritura."
+    },
+    "Pregunta 2": {
+        "question": "¿Cómo se llaman los tres grandes periodos en que se divide la prehistoria?",
+        "answer": "La prehistoria se divide en Paleolítico, Mesolítico y Neolítico."
+    },
+    "Pregunta 3": {
+        "question": "¿Por qué la domestización de plantas y animales permitió a los seres humanos establecerse en un lugar y formar comunidades más grandes?",
+        "answer": "La domestización de plantas y animales permitió a los seres humanos producir alimentos de manera más eficiente y establecerse en un lugar de manera permanente."
+    }
+}
