@@ -10,7 +10,7 @@ src/temp/
 *.so
 
 # Juptyer Notebooks
-*.ipynb
+# *.ipynb
 
 # Distribution / packaging
 .Python

@@ -1,0 +1,3 @@
+GROQ_API_KEY: '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'
+RAG_URL: 'https://us-central1-ferneutron-demos.cloudfunctions.net/alpacademy-retriever'
+MATERIALS_ROUTE: 'src/data/estados_materiales.json'
