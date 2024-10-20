@@ -5,6 +5,7 @@ from src.services import TeacherAssistantService
 
 Router = APIRouter(prefix="/v1")
 
+
 @Router.post("/predict")
 async def orchestrator(
         request: RequestModel,

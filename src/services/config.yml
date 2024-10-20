@@ -1,3 +1,24 @@
 GROQ_API_KEY: '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'
 RAG_URL: 'https://us-central1-ferneutron-demos.cloudfunctions.net/alpacademy-retriever'
 MATERIALS_ROUTE: 'data/estados_materiales.json'
+LLM_GET_QUESTION_PROMPT: |
+  Eres un profesor de nivel básico, y estas enseñándole a un alumno, tu tarea es que: basado en el contexto que se te proporciona a continuación. 
+  Deberás generar UNA y SÓLO UNA PREGUNTA que busque evaluar el nivel de conocimiento del alumno sobre el contexto que se te proporciona.
+  Considera que el nivel de conocimiento del alumno es básico, por lo que la pregunta debe ser acorde a este nivel de educación.
+  
+  A continuación se te muestra un ejemplo de cómo habrás de responder:
+  
+  ------------------------------------------------
+  La Selva Lacandona posee condiciones climáticas húmedas, cálidas y semicálidas, predominando el clima cálido húmedo con una temperatura media anual superior a los 22 °C, con baja oscilación térmica anual. 
+  Las lluvias alcanzan valores anuales superiores a los 1500 mm y pueden llegar hasta los 3000 mm en la zona norte. En los lugares de mayor altitud, se localiza el tipo climático semicálido, 
+  el más fresco de los cálidos, con una temperatura media anual inferior a los 22 °C, sin descender de los 18 °C, con este tipo climático se encuentra asociado el bosque de pino-encino.
+  ------------------------------------------------
+  
+  '¿Cuáles son dos condiciones del clima de La Selva Lacandona?'
+
+LLM_GET_QUESTION_USER_PROMPT: | 
+  
+  El contexto se encuentra abajo.
+  ------------------------------------------------
+  {context}
+  ------------------------------------------------

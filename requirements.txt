@@ -10,3 +10,4 @@ notebook
 pydantic
 fastapi
 injector
+requests

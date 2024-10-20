@@ -15,3 +15,4 @@ def rag_query(context, config):
     else:
         rag_api_response.raise_for_status()
         return None
+
