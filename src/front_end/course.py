@@ -74,7 +74,11 @@ if __name__ == '__main__':
             # Chatbot
             chatbot = gr.Chatbot(label="Conversación con el Agente")
             mensaje = gr.Textbox(label="Tu pregunta", placeholder="Escribe tu pregunta aquí...", autofocus=True)
-            tx_box = gr.Textbox(saluda())
+            tx_box  = gr.Textbox(
+                    value=saluda(),  # Llama a la función y usa su retorno como valor inicial
+                    label="Texto Generado",
+                    interactive=False  # Hace que el Textbox no sea editable
+            )
             enviar_btn = gr.Button("Enviar pregunta")
 
         # Inicializar con la primera semana
