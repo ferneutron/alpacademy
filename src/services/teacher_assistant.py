@@ -1,12 +1,11 @@
 from src.utilities.companion_utilities import inference_pipeline_non_parametric
-from src.utilities.companion_utilities import inference_pipeline
-# from src.utilities.rag_aux import rag_query
 import yaml
 from src.utilities.get_llms import get_llm_client
-from src.mocks.materials import material_1, material_2, material_3
 from src.utilities.llama_interaction import generate_llama_qa_response
 from src.utilities.llama_interaction import get_llama_generated_question_from_material
 from src.utilities.llama_interaction import generate_answer_from_generated_question
+from src.services.llm_response import llm_inference_pipeline
+from src.utilities.llm_call.openai_llm import Agent
 
 
 class TeacherAssistantService:
@@ -65,8 +64,11 @@ class TeacherAssistantService:
         )
         return llama_response
 
-    def parametric_predict(self):
-        pass
-
-    def parametric_generate_question(self):
-        pass
+    def answer_follow_up(self, question_key, utterance):
+        follow_up_answer = llm_inference_pipeline(
+            llm_provider="groq",
+            question_id=question_key,
+            query=utterance,
+            model=Agent
+        )
+        return follow_up_answer

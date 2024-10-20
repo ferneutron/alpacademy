@@ -19,3 +19,8 @@ class AnswerGenerated(BaseModel):
     text: str
     material: str
     llama_generated_question: str
+
+
+class FollowUpModel(BaseModel):
+    text: str
+    question_key: str
