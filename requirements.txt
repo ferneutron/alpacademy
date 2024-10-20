@@ -1,3 +1,9 @@
+uvicorn
+openai
+python-dotenv
+boto3
+tenacity
+numpy
 groq
 PyYAML
 notebook
