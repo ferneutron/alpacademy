@@ -1,7 +1,6 @@
 import json
 from pydantic import BaseModel, Field
 from typing import Callable, Dict, Any, List, Union
-from openai.types.chat import ChatCompletion
 from datetime import datetime
 from enum import Enum
 
@@ -30,7 +29,7 @@ def get_tool_schema(tool: Callable, model: BaseModel) -> Dict[str, Any]:
 
 
 def get_tool_call_results(
-    tool_list: List[Callable], chat_completion_raw: ChatCompletion
+    tool_list: List[Callable], chat_completion_raw
 ) -> Union[List[Dict[str, Any]], str]:
     if isinstance(chat_completion_raw, str):
         return chat_completion_raw
